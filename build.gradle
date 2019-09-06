@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'com.diffplug.gradle.spotless' version '3.23.0'
+    id 'idea'
+}
+
+repositories {
+    mavenCentral()
+}
+
+spotless {
+    java {
+        googleJavaFormat('1.7')
+    }
+}
+
+idea {
+    module {
+        outputDir file('build/classes/main')
+        testOutputDir file('build/classes/test')
+    }
+}
+
+ext {
+    lombokVersion = '1.18.8'
+    jerseyVersion = '2.26'
+}
+
+dependencies {
+    // lombok
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+    compile "org.glassfish.jersey.core:jersey-client:$jerseyVersion"
+    compile "org.glassfish.jersey.inject:jersey-hk2:$jerseyVersion"
+    compile "org.glassfish.jersey.media:jersey-media-json-jackson:$jerseyVersion"
+
+    // required with newer JDKs
+    compile 'javax.activation:activation:1.1'
+}
